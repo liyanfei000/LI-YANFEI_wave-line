@@ -1,8 +1,8 @@
-var cityindex = 3;
+var cityindex = 3;// Start from Milan
 
 var xspacing = 80;    // Distance between each horizontal location
 var w;                // Width of entire wave
-var theta = 0.0;      // Start angle at 0(改变开始的角度可以改变摆动的动作)
+var theta = 0.0;      // Start angle at 0
 var amplitude = 20.0; // Height of wave
 var period ;   // How many pixels before the wave repeats
 var dx;               // Value for incrementing x
@@ -11,8 +11,7 @@ var a=300;  // current position
 var mySpeed;//the speed of moving
 var maskcolor
 var backgroundcolor
-
-var den//污染物之间的间距,和pm值相关，所以和pmlist【】相关
+var den//Distances bitween PM10 dots.
 
   var citylist = ['BARCELONA',
                  'HELSINKI',
@@ -78,7 +77,7 @@ function setup() {
 
 function draw() {
     
- //对应数字与城市
+ //match cities to numbers
     
    maskcolor=maskcolorlist[cityindex];
    den=4000/pmlist[cityindex]
@@ -92,7 +91,7 @@ if(mouseIsPressed){
   
   background(backgroundcolor);
   }
- renderWave(a);//调用一次就可以多一个形状，但是问题是calwave作用出的效果也会变化
+ renderWave(a);
  
     
   }else{
@@ -103,7 +102,7 @@ if(mouseIsPressed){
   }
    renderWave(a);
   }
-     //黑色遮罩
+     //dark rect
   if(a>=1.3*windowHeight & a<2*windowHeight){
     fill(0,0,0,80);
     noStroke();
@@ -117,7 +116,7 @@ if(mouseIsPressed){
     rect(0,0,windowWidth, windowHeight);
     
   }
- // 提示的字！
+ // text
 if(a>=1.3*windowHeight & a<2*windowHeight){
 fill(255,0,100);
     noStroke();
@@ -139,11 +138,11 @@ fill(255,0,100);
  
   }
     
- //对应数字与城市  
+ // match cities to numbers 
  textpm(cityindex);
  textcity(cityindex);
  textmask(cityindex);
-//导入图片
+//pictures
 
  imageMode(CENTER)
  image(mask,width/2-50,height/5+150,mask.width/3,mask.height/3)
@@ -165,7 +164,7 @@ fill(255,0,100);
   image(STOCKHOLM,width/2+250,height/5+20,STOCKHOLM.width/3.5,STOCKHOLM.height/3)
 
 }
-//波浪运动
+//wave line
 
 function calcWave(period) {
   
@@ -182,7 +181,7 @@ function calcWave(period) {
 function renderWave(yinter) {
   // A simple way to draw the wave with an ellipse at each location
     calcWave(100);//function calcWave(period) (period:How many pixels before the wave repeats)
-    calcWave(1000);//（用两个calwave才能互相作用出摆动的效果）
+    calcWave(1000);
   
   for (var x = 0; x < yvalues.length; x++) {
     var xdot=x*xspacing;
@@ -201,7 +200,7 @@ function renderWave(yinter) {
       }
   }
  
-   push();
+    push();
     noStroke();
   fill(maskcolor);
   //fill(224,223,239);
@@ -217,7 +216,7 @@ function renderWave(yinter) {
     pop();
     
 }
-//不同城市的名字
+//cities name
 function textcity(index){
   
   textAlign(CENTER) 
@@ -228,7 +227,7 @@ function textcity(index){
   textSize(50);
   text(citylist[index],width/2,height/5);   
 }
-//写pm数值
+// PM 10
 function textpm(index){
    
   textAlign(CENTER) 
@@ -238,7 +237,7 @@ function textpm(index){
   textSize(40);
   text(pmlist[index], width/2,height/5+105) 
 }
-//写有几个口罩
+// Numbers of masks
 function textmask(index){
     textAlign(CENTER) 
    noStroke()
@@ -248,7 +247,7 @@ function textmask(index){
   textSize(20);
   text(round((pmlist[index]-5)/10), width/2+55,height/5+160) 
 }
-//点击鼠标
+//click the different cities
 function mouseClicked() {
     
  if( mouseX> (width/2-370) && mouseX< (width/2-370)+BARCELONA.width/3.5 && mouseY>height/5+20 && mouseY< height/5+20+BARCELONA.height/3 ){
@@ -288,7 +287,7 @@ function mouseClicked() {
 
 function windowResized(){
     resizeCanvas(windowWidth,windowHeight);
-    //image(myImage,width/2,height/2,windowWidth,windowHeight);
+    
      
 }
 
